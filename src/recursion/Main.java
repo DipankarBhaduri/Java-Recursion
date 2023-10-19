@@ -1,8 +1,11 @@
+package recursion;
+
 public class Main {
     public static void main(String[] args) {
-        String string = "racecar";
-        boolean b = checkPalindrome(string, 0, string.length() - 1);
-        System.out.println(b);
+        String string = "Java Java is a programming language";
+        String sub = "Java";
+        String result = removeSubstring(string, sub);
+        System.out.println(result);
     }
 
     /**
@@ -48,16 +51,22 @@ public class Main {
      * @param end   The index of the last character in the range to be reversed.
      */
     private static void reverseOfTheString(char[] ch, int start, int end) {
-       if(ch != null && ch.length > 0 && start < end) {
-           char c = ch[start];
-           ch[start] = ch [end];
-           ch[end] = c;
-           reverseOfTheString(ch, start + 1, end - 1);
-       }else{
-           return ;
-       }
+        if(ch == null || ch.length == 0 || start >= end) {
+            return;
+        }
+        char c = ch[start];
+        ch[start] = ch [end];
+        ch[end] = c;
+        reverseOfTheString(ch, start + 1, end - 1);
     }
 
+    /**
+     * Recursively checks if a given string is a palindrome.
+     * @param string The input string to be checked.
+     * @param start  The starting index for comparison.
+     * @param end    The ending index for comparison.
+     * @return True if the string is a palindrome, false otherwise.
+     */
     private static boolean checkPalindrome(String string, int start, int end) {
         if(string != null && string.length() > 0 && start < end) {
             if(string.charAt(start) != string.charAt(end)){
@@ -69,14 +78,49 @@ public class Main {
             return true;
         }
     }
+
+    /**
+     * Counts the number of words in a given string.
+     * This method takes a string as input and counts the number of words in it.
+     * Words in the string are separated by spaces. For example, the input "Hello world" should return 2.
+     * @param string The input string to count words from.
+     * @return The number of words in the input string.
+     */
+    private static int countWordInString(String string) {
+        if(string != null && string.length() > 0) {
+            if(string.charAt(0) == ' '){
+                return 1 + countWordInString(string.substring(1));
+            } else {
+                return countWordInString(string.substring(1));
+            }
+        }else{
+            return 0;
+        }
+    }
+
+    /**
+     * Remove Substring: Write a method that removes all occurrences of a specified substring from a given string. For example,
+     * if the input string is "Java is a programming language" and the substring to remove is "is,
+     * " the output should be "Java a programming language."
+     * @param string
+     * @return
+     */
+    public static String removeSubstring(String string, String sub) {
+        if(string == null || sub == null || string.isEmpty() || sub.isEmpty() || sub.length() > string.length()) {
+            return string;
+        }
+        if(string.substring(0, sub.length()).equals(sub) && string.length() > sub.length()) {
+            return removeSubstring(string.substring(sub.length()+1), sub);
+        } else if (string.substring(0, sub.length()).equals(sub)) {
+            return removeSubstring(string.substring(sub.length()), sub);
+        } else {
+            return string.substring(0,1).concat(removeSubstring(string.substring(1), sub));
+        }
+    }
 }
 
 
 /**
- * Palindrome Check: Write a method to check if a given string is a palindrome. A palindrome is a word, phrase, number, or other sequence of characters that reads the same forward and backward. For example, "racecar" is a palindrome.
- *
- * Count Words in a String: Create a method that counts the number of words in a given string. Words are separated by spaces. For example, the input "Hello world" should return 2.
- *
  * Remove Substring: Write a method that removes all occurrences of a specified substring from a given string. For example, if the input string is "Java is a programming language" and the substring to remove is "is," the output should be "Java a programming language."
  *
  * String Compression: Implement a method to perform basic string compression using the counts of repeated characters. For example, the string "aaabbbcc" would become "a3b3c2."
