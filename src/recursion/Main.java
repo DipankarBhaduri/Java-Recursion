@@ -2,9 +2,8 @@ package recursion;
 
 public class Main {
     public static void main(String[] args) {
-        String string = "Java Java is a programming language";
-        String sub = "Java";
-        String result = removeSubstring(string, sub);
+        String string = "hello Hello World";
+        String result = replaceWithHi(string);
         System.out.println(result);
     }
 
@@ -117,23 +116,20 @@ public class Main {
             return string.substring(0,1).concat(removeSubstring(string.substring(1), sub));
         }
     }
+    /**
+     * @Replace_Substring_with_Another_String: Create a method that replaces all occurrences of a specified
+     * substring with another string in a given string. For example, if the input string is "Hello, World!"
+     * and you want to replace "Hello" with "Hi," the output should be "Hi, World!".
+     */
+    private static String replaceWithHi(String string) {
+        if(string == null || string.length() < 5) {
+            return string;
+        }
+
+        if(string.substring(0,5).toLowerCase().equals("hello")) {
+            return "hi".concat(replaceWithHi(string.substring(5)));
+        } else {
+            return string.substring(0,1).concat(replaceWithHi(string.substring(1)));
+        }
+    }
 }
-
-
-/**
- * Remove Substring: Write a method that removes all occurrences of a specified substring from a given string. For example, if the input string is "Java is a programming language" and the substring to remove is "is," the output should be "Java a programming language."
- *
- * String Compression: Implement a method to perform basic string compression using the counts of repeated characters. For example, the string "aaabbbcc" would become "a3b3c2."
- *
- * Find Longest Substring Without Repeating Characters: Write a method that finds the longest substring without repeating characters in a given string. For example, in the string "abcabcbb," the longest substring without repeating characters is "abc."
- *
- * Replace Substring with Another String: Create a method that replaces all occurrences of a specified substring with another string in a given string. For example, if the input string is "Hello, World!" and you want to replace "Hello" with "Hi," the output should be "Hi, World!".
- *
- * String Permutations: Write a method to generate all permutations of a string. For example, if the input is "abc," the output should be a list of all possible permutations: "abc," "acb," "bac," "bca," "cab," and "cba."
- *
- * String Reversal with Recursion: Implement a method to reverse a string using recursion instead of iteration.
- *
- * Remove Whitespace: Write a method that removes all whitespace characters (spaces, tabs, and line breaks) from a given string.
- *
- * These problems should provide you with a variety of string manipulation challenges to improve your programming skills in Java.
- */
